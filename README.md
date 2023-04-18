@@ -2,6 +2,7 @@
 
 [![Bagde: Google Cloud](https://img.shields.io/badge/Google%20Cloud-%234285F4.svg?logo=google-cloud&logoColor=white)](https://github.com/Cyclenerd/terraform-google-wif-github#readme)
 [![Badge: Terraform](https://img.shields.io/badge/Terraform-%235835CC.svg?logo=terraform&logoColor=white)](https://github.com/Cyclenerd/terraform-google-wif-github#readme)
+[![Badge: GitHub](https://img.shields.io/badge/GitHub-181717.svg?logo=github&logoColor=white)](https://github.com/Cyclenerd/terraform-google-wif-github#readme)
 [![Bagde: CI](https://github.com/Cyclenerd/terraform-google-wif-github/actions/workflows/ci.yml/badge.svg)](https://github.com/Cyclenerd/terraform-google-wif-github/actions/workflows/ci.yml)
 [![Bagde: GitHub](https://img.shields.io/github/license/cyclenerd/terraform-google-wif-github)](https://github.com/Cyclenerd/terraform-google-wif-github/blob/master/LICENSE)
 
