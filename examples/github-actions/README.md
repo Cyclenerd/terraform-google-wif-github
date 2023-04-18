@@ -39,6 +39,7 @@ module "github-service-account" {
   pool_name  = module.github-wif.pool_name
   account_id = google_service_account.github.account_id
   repository = var.github_repository
+  depends_on = [google_service_account.github]
 }
 
 # Get the Workload Identity Pool Provider resource name for GitHub Actions configuration
@@ -53,7 +54,7 @@ output "github-workload-identity-provider" {
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_github_account_id"></a> [github\_account\_id](#input\_github\_account\_id) | The account id of the service account for GitHub Actions | `string` | n/a | yes |
-| <a name="input_github_repository"></a> [github\_repository](#input\_github\_repository) | The account id of the service account for GitHub Actions | `string` | n/a | yes |
+| <a name="input_github_repository"></a> [github\_repository](#input\_github\_repository) | The GitHub repository | `string` | n/a | yes |
 | <a name="input_project_id"></a> [project\_id](#input\_project\_id) | The ID of the project | `string` | n/a | yes |
 
 ## Outputs
