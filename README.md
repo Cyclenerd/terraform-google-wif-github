@@ -22,7 +22,7 @@ Create Workload Identity Pool and Provider:
 # Create Workload Identity Pool Provider for GitHub
 module "github-wif" {
   source     = "Cyclenerd/wif-github/google"
-  version    = "1.0.0"
+  version    = "~> 1.0.0"
   project_id = "your-project-id"
 }
 
@@ -47,7 +47,7 @@ data "google_service_account" "github" {
 # Allow service account to login via WIF and only from GitHub repository
 module "github-service-account" {
   source     = "Cyclenerd/wif-service-account/google"
-  version    = "1.0.0"
+  version    = "~> 1.0.0"
   project_id = "your-project-id"
   pool_name  = module.github-wif.pool_name
   account_id = data.google_service_account.github.account_id
