@@ -132,3 +132,9 @@ variable "attribute_mapping" {
     "attribute.workflow_sha"          = "assertion.workflow_sha"          # The commit SHA for the workflow file.
   }
 }
+
+variable "attribute_condition" {
+  type        = string
+  description = "(Optional) Workload Identity Pool Provider attribute condition expression"
+  default     = null
+}
