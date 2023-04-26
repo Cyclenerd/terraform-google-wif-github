@@ -119,7 +119,6 @@ variable "attribute_mapping" {
     "attribute.ref"                   = "assertion.ref"                   # (Reference) The git ref that triggered the workflow run.
     "attribute.ref_type"              = "assertion.ref_type"              # The type of ref, for example: "branch".
     "attribute.repository_visibility" = "assertion.repository_visibility" # The visibility of the repository where the workflow is running. Accepts the following values: internal, private, or public.
-    "attribute.repository"            = "assertion.repository"            # The repository from where the workflow is running.
     "attribute.repository_id"         = "assertion.repository_id"         # The ID of the repository from where the workflow is running.
     "attribute.repository_owner"      = "assertion.repository_owner"      # The name of the organization in which the repository is stored.
     "attribute.repository_owner_id"   = "assertion.repository_owner_id"   # The ID of the organization in which the repository is stored.

@@ -61,17 +61,37 @@ module "github-service-account" {
 
 ## OIDC Token Attribute Mapping
 
-Attribute mapping:
+Default attribute mapping:
 
-| Attribute              | Claim                  |
-|------------------------|------------------------|
-| `google.subject`       | `assertion.sub`        |
-| `attribute.sub`        | `assertion.sub`        |
-| `attribute.actor`      | `assertion.actor`      |
-| `attribute.repository` | `assertion.repository` |
+| Attribute                         | Claim                             | Description |
+|-----------------------------------|-----------------------------------|-------------|
+| `google.subject`                  | `assertion.sub`                   | Subject
+| `attribute.sub`                   | `assertion.sub`                   | Defines the subject claim that is to be validated by the cloud provider. This setting is essential for making sure that access tokens are only allocated in a predictable way.
+| `attribute.actor`                 | `assertion.actor`                 | The personal account that initiated the workflow run.
+| `attribute.repository`            | `assertion.repository`            | The repository from where the workflow is running
+| `attribute.actor_id`              | `assertion.actor_id`              | The ID of personal account that initiated the workflow run.
+| `attribute.base_ref`              | `assertion.base_ref`              | The target branch of the pull request in a workflow run.
+| `attribute.environment`           | `assertion.environment`           | The name of the environment used by the job.
+| `attribute.event_name`            | `assertion.event_name`            | The name of the event that triggered the workflow run.
+| `attribute.head_ref`              | `assertion.head_ref`              | The source branch of the pull request in a workflow run.
+| `attribute.job_workflow_ref`      | `assertion.job_workflow_ref`      | For jobs using a reusable workflow, the ref path to the reusable workflow. For more information, see "Using OpenID Connect with reusable workflows.
+| `attribute.job_workflow_sha`      | `assertion.job_workflow_sha`      | For jobs using a reusable workflow, the commit SHA for the reusable workflow file.
+| `attribute.ref`                   | `assertion.ref`                   | (Reference) The git ref that triggered the workflow run.
+| `attribute.ref_type`              | `assertion.ref_type`              | The type of ref, for example: "branch".
+| `attribute.repository_visibility` | `assertion.repository_visibility` | The visibility of the repository where the workflow is running. Accepts the following values: internal, private, or public.
+| `attribute.repository_id`         | `assertion.repository_id`         | The ID of the repository from where the workflow is running.
+| `attribute.repository_owner`      | `assertion.repository_owner`      | The name of the organization in which the repository is stored.
+| `attribute.repository_owner_id`   | `assertion.repository_owner_id`   | The ID of the organization in which the repository is stored.
+| `attribute.run_id`                | `assertion.run_id`                | The ID of the workflow run that triggered the workflow.
+| `attribute.run_number`            | `assertion.run_number`            | The number of times this workflow has been run.
+| `attribute.run_attempt`           | `assertion.run_attempt`           | The number of times this workflow run has been retried.
+| `attribute.runner_environment`    | `assertion.runner_environment`    | The type of runner used by the job. Accepts the following values: github-hosted or self-hosted.
+| `attribute.workflow`              | `assertion.workflow`              | The name of the workflow.
+| `attribute.workflow_ref`          | `assertion.workflow_ref`          | The ref path to the workflow. For example, octocat/hello-world/.github/workflows/my-workflow.yml@refs/heads/my_branch.
+| `attribute.workflow_sha`          | `assertion.workflow_sha`          | The commit SHA for the workflow file.| 
 
 <!-- BEGIN_TF_DOCS -->
-## Providers
+## Provi| s
 
 | Name | Version |
 |------|---------|
