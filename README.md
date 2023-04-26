@@ -9,7 +9,7 @@
 This Terraform module creates a Workload Identity Pool and Provider for GitHub.
 
 Service account keys are a security risk if compromised.
-Avoid service account keys and instead use the [Workload Identity Federation](https://cloud.google.com/iam/docs/configuring-workload-identity-federation).
+Avoid service account keys and instead use the [Workload Identity Federation](https://github.com/Cyclenerd/google-workload-identity-federation#readme).
 For more information about Workload Identity Federation and how to best authenticate service accounts on Google Cloud, please see my GitHub repo [Cyclenerd/google-workload-identity-federation](https://github.com/Cyclenerd/google-workload-identity-federation#readme).
 
 > There is also a ready-to-use Terraform module for [GitLab](https://github.com/Cyclenerd/terraform-google-wif-gitlab#readme).
@@ -61,37 +61,42 @@ module "github-service-account" {
 
 ## OIDC Token Attribute Mapping
 
+> The attributes `attribute.sub` and `attribute.repository` are used in the Terrform module [Cyclenerd/wif-service-account/google](https://github.com/Cyclenerd/terraform-google-wif-service-account).
+> Please do not remove these attributes.
+
 Default attribute mapping:
 
 | Attribute                         | Claim                             | Description |
 |-----------------------------------|-----------------------------------|-------------|
 | `google.subject`                  | `assertion.sub`                   | Subject
 | `attribute.sub`                   | `assertion.sub`                   | Defines the subject claim that is to be validated by the cloud provider. This setting is essential for making sure that access tokens are only allocated in a predictable way.
-| `attribute.actor`                 | `assertion.actor`                 | The personal account that initiated the workflow run.
 | `attribute.repository`            | `assertion.repository`            | The repository from where the workflow is running
+| `attribute.aud`                   | `assertion.aud`                   | Audience
+| `attribute.iss`                   | `assertion.iss`                   | The issuer of the OIDC token: `https://token.actions.githubusercontent.com`
+| `attribute.actor`                 | `assertion.actor`                 | The personal account that initiated the workflow run.
 | `attribute.actor_id`              | `assertion.actor_id`              | The ID of personal account that initiated the workflow run.
 | `attribute.base_ref`              | `assertion.base_ref`              | The target branch of the pull request in a workflow run.
 | `attribute.environment`           | `assertion.environment`           | The name of the environment used by the job.
 | `attribute.event_name`            | `assertion.event_name`            | The name of the event that triggered the workflow run.
 | `attribute.head_ref`              | `assertion.head_ref`              | The source branch of the pull request in a workflow run.
-| `attribute.job_workflow_ref`      | `assertion.job_workflow_ref`      | For jobs using a reusable workflow, the ref path to the reusable workflow. For more information, see "Using OpenID Connect with reusable workflows.
+| `attribute.job_workflow_ref`      | `assertion.job_workflow_ref`      | For jobs using a reusable workflow, the ref path to the reusable workflow. For more information, see [Using OpenID Connect with reusable workflows](https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/using-openid-connect-with-reusable-workflows).
 | `attribute.job_workflow_sha`      | `assertion.job_workflow_sha`      | For jobs using a reusable workflow, the commit SHA for the reusable workflow file.
 | `attribute.ref`                   | `assertion.ref`                   | (Reference) The git ref that triggered the workflow run.
-| `attribute.ref_type`              | `assertion.ref_type`              | The type of ref, for example: "branch".
-| `attribute.repository_visibility` | `assertion.repository_visibility` | The visibility of the repository where the workflow is running. Accepts the following values: internal, private, or public.
+| `attribute.ref_type`              | `assertion.ref_type`              | The type of `ref`, for example: "branch".
+| `attribute.repository_visibility` | `assertion.repository_visibility` | The visibility of the repository where the workflow is running. Accepts the following values: `internal`, `private`, or `public`.
 | `attribute.repository_id`         | `assertion.repository_id`         | The ID of the repository from where the workflow is running.
-| `attribute.repository_owner`      | `assertion.repository_owner`      | The name of the organization in which the repository is stored.
-| `attribute.repository_owner_id`   | `assertion.repository_owner_id`   | The ID of the organization in which the repository is stored.
+| `attribute.repository_owner`      | `assertion.repository_owner`      | The name of the organization in which the `repository` is stored.
+| `attribute.repository_owner_id`   | `assertion.repository_owner_id`   | The ID of the organization in which the `repository` is stored.
 | `attribute.run_id`                | `assertion.run_id`                | The ID of the workflow run that triggered the workflow.
 | `attribute.run_number`            | `assertion.run_number`            | The number of times this workflow has been run.
 | `attribute.run_attempt`           | `assertion.run_attempt`           | The number of times this workflow run has been retried.
-| `attribute.runner_environment`    | `assertion.runner_environment`    | The type of runner used by the job. Accepts the following values: github-hosted or self-hosted.
+| `attribute.runner_environment`    | `assertion.runner_environment`    | The type of runner used by the job. Accepts the following values: `github-hosted` or `self-hosted`.
 | `attribute.workflow`              | `assertion.workflow`              | The name of the workflow.
-| `attribute.workflow_ref`          | `assertion.workflow_ref`          | The ref path to the workflow. For example, octocat/hello-world/.github/workflows/my-workflow.yml@refs/heads/my_branch.
-| `attribute.workflow_sha`          | `assertion.workflow_sha`          | The commit SHA for the workflow file.| 
+| `attribute.workflow_ref`          | `assertion.workflow_ref`          | The ref path to the workflow. For example, `octocat/hello-world/.github/workflows/my-workflow.yml@refs/heads/my_branch`.
+| `attribute.workflow_sha`          | `assertion.workflow_sha`          | The commit SHA for the workflow file.
 
 <!-- BEGIN_TF_DOCS -->
-## Provi| s
+## Providers
 
 | Name | Version |
 |------|---------|
@@ -102,7 +107,7 @@ Default attribute mapping:
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_attribute_condition"></a> [attribute\_condition](#input\_attribute\_condition) | (Optional) Workload Identity Pool Provider attribute condition expression | `string` | `null` | no |
-| <a name="input_attribute_mapping"></a> [attribute\_mapping](#input\_attribute\_mapping) | Workload Identity Pool Provider attribute mapping | `map(string)` | <pre>{<br>  "attribute.actor": "assertion.actor",<br>  "attribute.actor_id": "assertion.actor_id",<br>  "attribute.base_ref": "assertion.base_ref",<br>  "attribute.environment": "assertion.environment",<br>  "attribute.event_name": "assertion.event_name",<br>  "attribute.head_ref": "assertion.head_ref",<br>  "attribute.job_workflow_ref": "assertion.job_workflow_ref",<br>  "attribute.job_workflow_sha": "assertion.job_workflow_sha",<br>  "attribute.ref": "assertion.ref",<br>  "attribute.ref_type": "assertion.ref_type",<br>  "attribute.repository": "assertion.repository",<br>  "attribute.repository_id": "assertion.repository_id",<br>  "attribute.repository_owner": "assertion.repository_owner",<br>  "attribute.repository_owner_id": "assertion.repository_owner_id",<br>  "attribute.repository_visibility": "assertion.repository_visibility",<br>  "attribute.run_attempt": "assertion.run_attempt",<br>  "attribute.run_id": "assertion.run_id",<br>  "attribute.run_number": "assertion.run_number",<br>  "attribute.runner_environment": "assertion.runner_environment",<br>  "attribute.sub": "attribute.sub",<br>  "attribute.workflow": "assertion.workflow",<br>  "attribute.workflow_ref": "assertion.workflow_ref",<br>  "attribute.workflow_sha": "assertion.workflow_sha",<br>  "google.subject": "assertion.sub"<br>}</pre> | no |
+| <a name="input_attribute_mapping"></a> [attribute\_mapping](#input\_attribute\_mapping) | Workload Identity Pool Provider attribute mapping | `map(string)` | <pre>{<br>  "attribute.actor": "assertion.actor",<br>  "attribute.actor_id": "assertion.actor_id",<br>  "attribute.aud": "attribute.aud",<br>  "attribute.base_ref": "assertion.base_ref",<br>  "attribute.environment": "assertion.environment",<br>  "attribute.event_name": "assertion.event_name",<br>  "attribute.head_ref": "assertion.head_ref",<br>  "attribute.iss": "attribute.iss",<br>  "attribute.job_workflow_ref": "assertion.job_workflow_ref",<br>  "attribute.job_workflow_sha": "assertion.job_workflow_sha",<br>  "attribute.ref": "assertion.ref",<br>  "attribute.ref_type": "assertion.ref_type",<br>  "attribute.repository": "assertion.repository",<br>  "attribute.repository_id": "assertion.repository_id",<br>  "attribute.repository_owner": "assertion.repository_owner",<br>  "attribute.repository_owner_id": "assertion.repository_owner_id",<br>  "attribute.repository_visibility": "assertion.repository_visibility",<br>  "attribute.run_attempt": "assertion.run_attempt",<br>  "attribute.run_id": "assertion.run_id",<br>  "attribute.run_number": "assertion.run_number",<br>  "attribute.runner_environment": "assertion.runner_environment",<br>  "attribute.sub": "attribute.sub",<br>  "attribute.workflow": "assertion.workflow",<br>  "attribute.workflow_ref": "assertion.workflow_ref",<br>  "attribute.workflow_sha": "assertion.workflow_sha",<br>  "google.subject": "assertion.sub"<br>}</pre> | no |
 | <a name="input_issuer_uri"></a> [issuer\_uri](#input\_issuer\_uri) | Workload Identity Pool Provider issuer URI | `string` | `"https://token.actions.githubusercontent.com"` | no |
 | <a name="input_pool_description"></a> [pool\_description](#input\_pool\_description) | Workload Identity Pool description | `string` | `"Workload Identity Pool for GitHub (Terraform managed)"` | no |
 | <a name="input_pool_disabled"></a> [pool\_disabled](#input\_pool\_disabled) | Workload Identity Pool disabled | `bool` | `false` | no |

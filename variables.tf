@@ -105,10 +105,12 @@ variable "attribute_mapping" {
     # https://registry.terraform.io/modules/Cyclenerd/wif-service-account/google/latest
     "google.subject"       = "assertion.sub"        # Subject
     "attribute.sub"        = "attribute.sub"        # Subject
-    "attribute.actor"      = "assertion.actor"      # The personal account that initiated the workflow run.
     "attribute.repository" = "assertion.repository" # The repository from where the workflow is running
     # More
     # https://docs.github.com/en/actions/deployment/security-hardening-your-deployments/about-security-hardening-with-openid-connect#understanding-the-oidc-token
+    "attribute.aud"                   = "attribute.aud"                   # Audience
+    "attribute.iss"                   = "attribute.iss"                   # Issuer
+    "attribute.actor"                 = "assertion.actor"                 # The personal account that initiated the workflow run.
     "attribute.actor_id"              = "assertion.actor_id"              # The ID of personal account that initiated the workflow run.
     "attribute.base_ref"              = "assertion.base_ref"              # The target branch of the pull request in a workflow run.
     "attribute.environment"           = "assertion.environment"           # The name of the environment used by the job.
