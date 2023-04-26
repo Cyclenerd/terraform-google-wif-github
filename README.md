@@ -75,12 +75,13 @@ Attribute mapping:
 
 | Name | Version |
 |------|---------|
-| <a name="provider_google"></a> [google](#provider\_google) | >= 4.61.0 |
+| <a name="provider_google"></a> [google](#provider\_google) | 4.62.0 |
 
 ## Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| <a name="input_attribute_mapping"></a> [attribute\_mapping](#input\_attribute\_mapping) | Workload Identity Pool Provider attribute mapping | `map(string)` | <pre>{<br>  "attribute.actor": "assertion.actor",<br>  "attribute.actor_id": "assertion.actor_id",<br>  "attribute.base_ref": "assertion.base_ref",<br>  "attribute.environment": "assertion.environment",<br>  "attribute.event_name": "assertion.event_name",<br>  "attribute.head_ref": "assertion.head_ref",<br>  "attribute.job_workflow_ref": "assertion.job_workflow_ref",<br>  "attribute.job_workflow_sha": "assertion.job_workflow_sha",<br>  "attribute.ref": "assertion.ref",<br>  "attribute.ref_type": "assertion.ref_type",<br>  "attribute.repository": "assertion.repository",<br>  "attribute.repository_id": "assertion.repository_id",<br>  "attribute.repository_owner": "assertion.repository_owner",<br>  "attribute.repository_owner_id": "assertion.repository_owner_id",<br>  "attribute.repository_visibility": "assertion.repository_visibility",<br>  "attribute.run_attempt": "assertion.run_attempt",<br>  "attribute.run_id": "assertion.run_id",<br>  "attribute.run_number": "assertion.run_number",<br>  "attribute.runner_environment": "assertion.runner_environment",<br>  "attribute.sub": "attribute.sub",<br>  "attribute.workflow": "assertion.workflow",<br>  "attribute.workflow_ref": "assertion.workflow_ref",<br>  "attribute.workflow_sha": "assertion.workflow_sha",<br>  "google.subject": "assertion.sub"<br>}</pre> | no |
 | <a name="input_issuer_uri"></a> [issuer\_uri](#input\_issuer\_uri) | Workload Identity Pool Provider issuer URI | `string` | `"https://token.actions.githubusercontent.com"` | no |
 | <a name="input_pool_description"></a> [pool\_description](#input\_pool\_description) | Workload Identity Pool description | `string` | `"Workload Identity Pool for GitHub (Terraform managed)"` | no |
 | <a name="input_pool_disabled"></a> [pool\_disabled](#input\_pool\_disabled) | Workload Identity Pool disabled | `bool` | `false` | no |
@@ -107,3 +108,5 @@ Attribute mapping:
 ## License
 
 All files in this repository are under the [Apache License, Version 2.0](LICENSE) unless noted otherwise.
+
+Based on [Terraform module for workload identity federation on GCP](https://github.com/mscribellito/terraform-google-workload-identity-federation) by [Michael S](https://github.com/mscribellito).
