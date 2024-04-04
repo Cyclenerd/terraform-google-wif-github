@@ -1,3 +1,4 @@
-project_id        = "your-project-id"
-github_account_id = "github-action"
-github_repository = "your-org-or-user/your-repo"
+project_id          = "your-project-id"
+github_account_id   = "github-action"
+github_organization = "your-org-or-user"
+github_repository   = "your-org-or-user/your-repo"
