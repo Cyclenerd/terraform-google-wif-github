@@ -8,7 +8,7 @@ With this example the following steps are executed and configured:
 
 1. Create Workload Identity Pool Provider for GitHub
 1. Create new service account for GitHub Actions
-1. Allow login via Workload Identity Provider and limit login only from the GitHub repository
+1. Allow login via Workload Identity Provider and limit login only from the GitHub organization and repository
 1. Output the Workload Identity Pool Provider resource name for GitHub Actions configuration
 
 > An example of a working GitHub Actions configuration can be found [here](https://github.com/Cyclenerd/google-workload-identity-federation/blob/master/.github/workflows/auth.yml).
@@ -16,11 +16,13 @@ With this example the following steps are executed and configured:
 <!-- BEGIN_TF_DOCS -->
 
 ```hcl
-# Create Workload Identity Pool Provider for GitHub
+# Create Workload Identity Pool Provider for GitHub and restrict access to GitHub organization
 module "github-wif" {
   source     = "Cyclenerd/wif-github/google"
   version    = "~> 1.0.0"
   project_id = var.project_id
+  # Restrict access to username or the name of a GitHub organization
+  attribute_condition = "assertion.repository_owner == '${var.github_organization}'"
 }
 
 # Create new service account for GitHub Actions
@@ -54,6 +56,7 @@ output "github-workload-identity-provider" {
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_github_account_id"></a> [github\_account\_id](#input\_github\_account\_id) | The account id of the service account for GitHub Actions | `string` | n/a | yes |
+| <a name="input_github_organization"></a> [github\_organization](#input\_github\_organization) | The username or the name of a GitHub organization | `string` | n/a | yes |
 | <a name="input_github_repository"></a> [github\_repository](#input\_github\_repository) | The GitHub repository | `string` | n/a | yes |
 | <a name="input_project_id"></a> [project\_id](#input\_project\_id) | The ID of the project | `string` | n/a | yes |
 

@@ -18,14 +18,20 @@ For more information about Workload Identity Federation and how to best authenti
 
 ## Example
 
+> **Warning**
+> GitHub use a single issuer URL across all organizations and some of the claims embedded in OIDC tokens might not be unique to your organization.
+> To help protect against spoofing threats, you must use an attribute condition that restricts access to tokens issued by your GitHub organization.
+
 Create Workload Identity Pool and Provider:
 
 ```hcl
-# Create Workload Identity Pool Provider for GitHub
+# Create Workload Identity Pool Provider for GitHub and restrict access to GitHub organization
 module "github-wif" {
   source     = "Cyclenerd/wif-github/google"
   version    = "~> 1.0.0"
-  project_id = "your-project-id"
+  project_id = var.project_id
+  # Restrict access to username or the name of a GitHub organization
+  attribute_condition = "assertion.repository_owner == '${var.github_organization}'"
 }
 
 # Get the Workload Identity Pool Provider resource name for GitHub Actions configuration
@@ -42,7 +48,7 @@ Allow service account to login via Workload Identity Provider and limit login on
 ```hcl
 # Get existing service account for GitHub Actions
 data "google_service_account" "github" {
-  project    = "your-project-id"
+  project    = var.project_id
   account_id = "existing-account-for-github-action"
 }
 
@@ -50,7 +56,7 @@ data "google_service_account" "github" {
 module "github-service-account" {
   source     = "Cyclenerd/wif-service-account/google"
   version    = "~> 1.0.0"
-  project_id = "your-project-id"
+  project_id = var.project_id
   pool_name  = module.github-wif.pool_name
   account_id = data.google_service_account.github.account_id
   repository = "octo-org/octo-repo"

@@ -1,8 +1,10 @@
-# Create Workload Identity Pool Provider for GitHub
+# Create Workload Identity Pool Provider for GitHub and restrict access to GitHub organization
 module "github-wif" {
   source     = "Cyclenerd/wif-github/google"
   version    = "~> 1.0.0"
   project_id = var.project_id
+  # Restrict access to username or the name of a GitHub organization
+  attribute_condition = "assertion.repository_owner == '${var.github_organization}'"
 }
 
 # Create new service account for GitHub Actions
